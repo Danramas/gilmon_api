@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('mails', function (Blueprint $table) {
             $table->id();
-            $table->string('document_uuid', 200)->unique();
-            $table->boolean('is_published')->default(false);
-            $table->foreignId('mail_id');
-            $table->timestamps();
+            $table->string('from', 200)->nullable();
+            $table->string('subject', 200)->nullable();
+            $table->string('message', 1000)->nullable();
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('mails');
     }
 };

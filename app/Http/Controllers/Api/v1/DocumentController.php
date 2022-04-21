@@ -26,7 +26,7 @@ class DocumentController extends Controller
 
     public function show(string $document_uuid)
     {
-        return new DocumentResource(Document::findByDocumentUuid($document_uuid));
+        return new DocumentResource(Document::with('mail')->findByDocumentUuid($document_uuid));
     }
 
     public function update(DocumentUpdateRequest $request, $document_uuid)
