@@ -10,9 +10,6 @@ class Document extends Model
 
     protected $fillable = [
         'document_uuid',
-        'from',
-        'subject',
-        'message',
     ];
 
     public static function findByDocumentUuid(string $document_uuid)
@@ -20,5 +17,8 @@ class Document extends Model
         return Document::where('document_uuid', '=', $document_uuid)->firstOrFail();
     }
 
+    public function mail() {
+        return $this->hasOne(Mail::class);
+    }
 
 }
