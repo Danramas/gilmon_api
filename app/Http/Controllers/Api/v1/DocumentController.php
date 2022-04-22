@@ -7,7 +7,7 @@ use App\Http\Helpers\UuidStringGeneratorHelper;
 use App\Http\Requests\DocumentUpdateRequest;
 use App\Http\Resources\DocumentResource;
 use App\Models\Document;
-use App\Models\Mail;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -21,10 +21,7 @@ class DocumentController extends Controller
 
     public function store(Request $request)
     {
-        $create_document = Document::create(['document_uuid' => UuidStringGeneratorHelper::generateUuidString()]);
-        Mail::create(['document_id' => $create_document['id']]);
-
-        return new DocumentResource($create_document);
+        return new DocumentResource(Document::create(['document_uuid' => UuidStringGeneratorHelper::generateUuidString()]));
     }
 
     public function show(string $document_uuid)
@@ -35,19 +32,11 @@ class DocumentController extends Controller
     public function update(DocumentUpdateRequest $request, $document_uuid)
     {
         $document = Document::findByDocumentUuid($document_uuid);
-        $mail = Mail::where('document_id', '=', $document['id'])->firstOrFail();
 
         if($document['is_published'] == false) {
-//            if($request['payload']) {
-                $mail->update($request->validated());
+            $document->update($request->validated());
 
-                return new DocumentResource($document);
-//            }
-//            else {
-//                return new Response([
-//                    'error' => 'You dont send payload data'
-//                ], 400);
-//            }
+            return new DocumentResource($document);
         }
         else {
             return new Response([
