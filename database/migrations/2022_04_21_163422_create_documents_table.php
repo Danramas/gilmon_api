@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('document_uuid', 200)->unique();
             $table->boolean('is_published')->default(false);
-            $table->foreignId('mail_id');
             $table->timestamps();
         });
     }

@@ -7,5 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mail extends Model
 {
-    use HasFactory;
+    protected $table = 'mails';
+
+    protected $fillable = [
+        'document_id',
+        'from',
+        'subject',
+        'message',
+    ];
+
+    public function document() {
+        return $this->belongsTo(Document::class);
+    }
 }

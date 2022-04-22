@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('mails', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('document_id')->nullable();
             $table->string('from', 200)->nullable();
             $table->string('subject', 200)->nullable();
             $table->string('message', 1000)->nullable();
+            $table->timestamps();
         });
     }
 
