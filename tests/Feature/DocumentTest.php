@@ -27,12 +27,21 @@ class DocumentTest extends TestCase
 
         $response
             ->assertStatus(404);
+    }
 
+    public function test_api_document_patch_unpublished_without_payload()
+    {
+        $response = $this->patchJson('/api/v1/document/' . self::$uuid, [
+
+        ]);
+
+        $response
+            ->assertStatus(400);
     }
 
     public function test_api_document_patch_unpublished()
     {
-        $response = $this->patchJson('/api/v1/document/'.self::$uuid, [
+        $response = $this->patchJson('/api/v1/document/' . self::$uuid, [
             'payload' => [
                 'from' => 'test',
                 'subject' => 'Hello',
