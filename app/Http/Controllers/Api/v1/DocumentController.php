@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DocumentUpdateRequest;
 use App\Http\Resources\DocumentResource;
 use App\Models\Document;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Ramsey\Uuid\Uuid;
@@ -13,9 +14,11 @@ use Ramsey\Uuid\Uuid;
 class DocumentController extends Controller
 {
 
-    public function index(): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
-        return DocumentResource::collection(Document::paginate());
+        return DocumentResource::collection(
+            Document::query()->paginate(perPage: $request->query('perPage'), page: $request->query('page'))
+        );
     }
 
     public function store(): DocumentResource
