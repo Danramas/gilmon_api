@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
@@ -35,9 +33,11 @@ class DocumentTest extends TestCase
     public function test_api_document_patch_unpublished()
     {
         $response = $this->patchJson('/api/v1/document/'.self::$uuid, [
-            'from' => 'test',
-            'subject' => 'Hello',
-            'message' => 'Hi! This is test :)'
+            'payload' => [
+                'from' => 'test',
+                'subject' => 'Hello',
+                'message' => 'Hi! This is test :)'
+            ]
         ]);
 
         $response
@@ -58,9 +58,11 @@ class DocumentTest extends TestCase
     public function test_api_document_patch_published()
     {
         $response = $this->patchJson('/api/v1/document/'.self::$uuid, [
-            'from' => 'test',
-            'subject' => 'Hello',
-            'message' => 'Hi! This is test :)'
+            'payload' => [
+                'from' => 'test',
+                'subject' => 'Hello',
+                'message' => 'Hi! This is test :)'
+            ]
         ]);
 
         $response
@@ -83,6 +85,5 @@ class DocumentTest extends TestCase
                     'message'
                 )
             );
-        var_dump($response->decodeResponseJson());
     }
 }

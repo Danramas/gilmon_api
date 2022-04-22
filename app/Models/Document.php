@@ -8,17 +8,24 @@ class Document extends Model
 {
     protected $table = 'documents';
 
-    protected $fillable = [
-        'document_uuid',
-        'from',
-        'subject',
-        'message',
+    protected $casts = [
+        'payload' => 'array'
     ];
 
-    public static function findByDocumentUuid(string $document_uuid)
+    protected $fillable = [
+        'uuid',
+        'status',
+        'payload'
+    ];
+
+    public static function findByUuid(string $uuid): Document
     {
-        return Document::where('document_uuid', '=', $document_uuid)->firstOrFail();
+        return Document::where('uuid', '=', $uuid)->firstOrFail();
     }
 
+    public function isPublished(): bool
+    {
+        return $this->status === 'published';
+    }
 
 }
