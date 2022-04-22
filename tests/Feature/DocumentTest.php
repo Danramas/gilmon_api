@@ -16,11 +16,10 @@ class DocumentTest extends TestCase
     {
         $response = $this->postJson('/api/v1/document');
 
-        $decodedResponse = $response->decodeResponseJson();
-        self::$uuid = $decodedResponse['data']['document']['id'];
-
         $response
             ->assertStatus(201);
+
+        self::$uuid = $response->decodeResponseJson()['data']['document']['id'];
 
     }
 
@@ -84,5 +83,6 @@ class DocumentTest extends TestCase
                     'message'
                 )
             );
+        var_dump($response->decodeResponseJson());
     }
 }
