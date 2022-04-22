@@ -16,6 +16,9 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('document_uuid', 200)->unique();
+            $table->string('from', 200)->nullable();
+            $table->string('subject', 200)->nullable();
+            $table->string('message', 1000)->nullable();
             $table->boolean('is_published')->default(false);
             $table->timestamps();
         });

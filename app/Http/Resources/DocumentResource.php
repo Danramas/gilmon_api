@@ -18,10 +18,16 @@ class DocumentResource extends JsonResource
             'document' => [
                 'id' => $this->document_uuid,
                 'status' => $this->when($this->is_published == true, 'published', 'draft'),
-                'payload' => new MailResource($this->mail),
+                'payload' => [
+                    'from' => $this->whenNotNull($this->from),
+                    'subject' => $this->whenNotNull($this->subject),
+                    'message' => $this->whenNotNull($this->message),
+                ],
                 'createAt' => $this->created_at,
                 'modifyAt' => $this->updated_at,
                 ],
+
+
         ];
     }
 }
